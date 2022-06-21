@@ -1,0 +1,25 @@
+static void vlch(double[,] matrix, out double[] ch)
+        {
+            ch = new double[matrix.GetLength(0)];
+            double[] us = new double[matrix.GetLength(0)];
+            double[,] cure_m = matrix;
+            do
+            {
+                double[,] U;
+                double[,] L = recMatB(cure_m, out U);
+                double[,] A0 = MatrixMultiplication(L, U);
+
+
+                for (int i = 0; i < ch.Length; i++)
+                {
+                    us[i] = Math.Abs(A0[i, i] - cure_m[i, i]);
+                }
+                cure_m = A0;
+                for (int i = 0; i < ch.Length; i++)
+                {
+                    ch[i] = cure_m[i, i];
+                }
+
+            } while (us[0] > 1E-4 && us[1] > 1E-4 && us[2] > 1E-4);
+
+        }
